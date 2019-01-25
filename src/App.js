@@ -1,28 +1,46 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import { withStyles } from '@material-ui/core/styles';
+
 import logo from './logo.svg';
 import './App.css';
 
+import TagList from './TagList';
+import Create from './CreateTag';
+import Edit from './EditTag';
+
+const styles = theme => ({
+  root: {
+    width: '100%',
+    // maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+  },
+});
+
 class App extends Component {
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <Switch>
+            <Route exact path='/create' component={ Create } />
+            <Route path='/edit/:id' component={ Edit } />
+            <Route path='/' component={ TagList } />
+        </Switch>
+      </Router>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(App);
